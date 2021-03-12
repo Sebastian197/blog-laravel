@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
     <a class="navbar-brand" href="{{route('home')}}">{{env('APP_NAME')}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -6,18 +6,8 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    CRUD
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{route('post.index')}}">Post</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{route('category.index')}}">Categoría</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{route('user.index')}}">Usuario</a>
-                    <div class="dropdown-divider"></div>
-                </div>
+            <li class="nav-item">
+                Home
             </li>
         </ul>
         <ul class="navbar-nav">

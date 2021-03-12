@@ -3,6 +3,7 @@
 use App\Http\Controllers\dashboard\CategoryController;
 use App\Http\Controllers\dashboard\PostController;
 use App\Http\Controllers\dashboard\UserController;
+use App\Http\Controllers\web\WebController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Route::prefix('dashboard')->group(function () {
     Route::resource('post', PostController::class);
@@ -29,5 +30,8 @@ Route::prefix('dashboard')->group(function () {
 });
 
 Auth::routes();
+
+
+Route::get('/', [WebController::class, 'index'])->name('index');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
