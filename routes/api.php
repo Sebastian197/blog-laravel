@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
+
+Route::resource('post', PostController::class)
+    ->only('index', 'show');
+Route::get('post/{category}/category', [PostController::class, 'category'])->name('post.category')->name('post.category');
+Route::get('post/{url_clean}/url_clean', [PostController::class, 'url_clean'])->name('post.url_clean');
+
+Route::get('category', [CategoryController::class, 'index']);
+Route::get('category/all', [CategoryController::class, 'all']);
