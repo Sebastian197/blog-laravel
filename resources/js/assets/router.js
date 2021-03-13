@@ -7,17 +7,23 @@ import VueRouter from 'vue-router';
 |--------------------------------------------------
 */
 import PostList from '../components/post/PostListComponent.vue';
-
-const Foo = { template: '<div>foo<router-link to="/foo">Go to Foo</router-link><router-link to="/bar">Go to Bar</router-link><router-link to="/">Go to List</router-link></div>' }
-const Bar = { template: '<div>bar<router-link to="/foo">Go to Foo</router-link><router-link to="/bar">Go to Bar</router-link><router-link to="/">Go to List</router-link></div>' }
+import PostDetail from '../components/post/PostDetailComponent.vue';
+import PostCategory from '../components/post/PostCategoryComponent.vue';
 
 Vue.use(VueRouter);
 
+
+/**
+|--------------------------------------------------
+| Routes Aplication
+|--------------------------------------------------
+*/
 const router = new VueRouter({
+    mode: 'history',
     routes: [
-        { path: '/', component: PostList },
-        { path: '/foo', component: Foo },
-        { path: '/bar', component: Bar },
+        { path: '/', component: PostList, name: 'list' },
+        { path: '/detail/:id', component: PostDetail, name: 'detail' },
+        { path: '/post-category/:category_id', component: PostCategory, name: 'post-category' },
     ]
 });
 

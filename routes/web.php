@@ -33,5 +33,8 @@ Auth::routes();
 
 
 Route::get('/', [WebController::class, 'index'])->name('index');
+Route::get('/detail/{id}', [WebController::class, 'detail']);
+
+Route::get('/post-category/{category_id}', [WebController::class, 'post_category']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

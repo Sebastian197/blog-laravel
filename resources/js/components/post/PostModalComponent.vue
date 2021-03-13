@@ -36,7 +36,7 @@
                 <div class="modal-footer">
                     <button
                         type="button"
-                        class="btn btn-outline-secondary"
+                        class="btn btn-outline-secondary btn-sm"
                         data-dismiss="modal"
                         @click="clean"
                     >
@@ -52,7 +52,7 @@
 export default {
     methods: {
         clean: function(){
-            this.$emit('closeModalPost');
+            this.$emit('closeModalPost')
         }
     },
 
@@ -64,7 +64,7 @@ export default {
 
     watch: {
         post: function (newVal, oldVal) {
-            (typeof(newVal) == 'object') && $('#postModal').modal('show');
+            (typeof(newVal) === 'object') && $('#postModal').modal('show')
         }
     }
 };

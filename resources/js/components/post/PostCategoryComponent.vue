@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 class="mt-3">{{category}}</h1>
         <div
             class="card mt-3"
             v-for="post in posts"
@@ -33,7 +34,7 @@
 <script>
 export default {
     created() {
-        this.getPost()
+        this.getPosts(this.$route.params.category_id)
     },
 
     methods: {
@@ -45,12 +46,14 @@ export default {
             this.postSelected = '';
         },
 
-        getPost: function() {
-            fetch('/api/post')
+        getPosts: function(category_id) {
+            fetch(`/api/post/${category_id}/category`)
                 .then(resp =>  resp.json())
                 .then(json => {
-                    const { data } = json.data
+                    const { data } = json.data.posts
+                    const { title } = json.data.category
                     this.posts = data
+                    this.category = title
                 })
         }
     },
@@ -58,7 +61,8 @@ export default {
     data: function () {
         return {
             postSelected: '',
-            posts: []
+            posts: [],
+            category: '',
         }
     }
 }
