@@ -1,39 +1,18 @@
 <template>
     <div>
-        <div
-            class="card mt-3"
-            v-for="post in posts"
-            v-bind:key="post.title"
-        >
-            <img
-                v-bind:src=" '/images/' + post.image"
-                class="card-img-top"
-            />
-            <div class="card-body">
-                <h5 class="card-title">{{post.title}}</h5>
-                <p class="card-text">{{post.content}}</p>
-                <button
-                    class="btn btn-outline-info btn-sm mr-2"
-                    v-on:click="postClick(post)"
-                >
-                    Ver resumen
-                </button>
-                <router-link
-                    class="btn btn-outline-success btn-sm"
-                    :to="{name: 'detail', params: {id: post.id}}"
-                >
-                    Ver post
-                </router-link>
-            </div>
-        </div>
-        <modal-post @closeModalPost="closeModalPost" :post="postSelected"></modal-post>
+        <post-list-default
+            @getCurrenPage="getCurrenPage"
+            v-if="total > 0"
+            :posts='posts'
+            :total='total'
+        ></post-list-default>
     </div>
 </template>
 
 <script>
 export default {
     created() {
-        this.getPost()
+        this.getPosts()
     },
 
     methods: {
@@ -45,20 +24,31 @@ export default {
             this.postSelected = '';
         },
 
-        getPost: function() {
-            fetch('/api/post')
+        getPosts: function() {
+            fetch(`/api/post?page=${this.getCurrenPage}`)
                 .then(resp =>  resp.json())
                 .then(json => {
-                    const { data } = json.data
+                    const { data, last_page } = json.data
+                    console.log(json.data)
                     this.posts = data
+                    this.total = last_page
+                    console.log('modal created ', last_page)
                 })
+        },
+
+        getCurrenPage: function (val) {
+            this.currentPage = val
+            this.getPosts()
         }
     },
 
     data: function () {
         return {
             postSelected: '',
-            posts: []
+            posts: [],
+            total: 0,
+            currentPage: 1
+
         }
     }
 }

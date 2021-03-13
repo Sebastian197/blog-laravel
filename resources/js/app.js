@@ -43,8 +43,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 | Components Post
 |--------------------------------------------------
 */
-//Vue.component('list-posts', require('./components/post/PostListComponent.vue').default);
 Vue.component('modal-post', require('./components/post/PostModalComponent.vue').default);
+Vue.component('post-list-default', require('./components/post/PostListDefaultComponent.vue').default);
 
 const app = new Vue({
     el: '#app',
