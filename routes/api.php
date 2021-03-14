@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('post', PostController::class)
     ->only('index', 'show');
-Route::get('post/{category}/category', [PostController::class, 'category'])->name('post.category')->name('post.category');
+Route::get('post/{category}/category', [PostController::class, 'category'])->name('post.category');
 Route::get('post/{url_clean}/url_clean', [PostController::class, 'url_clean'])->name('post.url_clean');
 
 Route::get('category', [CategoryController::class, 'index']);

@@ -30,3 +30,5 @@
     <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" placeholder="" aria-describedby="helpContent" rows="3">{{old('content', $post->content)}}</textarea>
     @error('content') <small id="helpContent" class="text-danger">{{$message}}</small> @enderror
 </div>
+
+<input type="hidden" id="token" value={{csrf_token()}}>

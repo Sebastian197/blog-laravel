@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PostComment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,7 +19,9 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             PostImageSeeder::class,
             RolSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ContactSeeder::class,
+            PostCommentSeeder::class
         ]);
     }
 }

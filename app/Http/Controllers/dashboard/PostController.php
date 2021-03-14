@@ -6,9 +6,11 @@ use App\Helpers\CustomUrl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostPost;
+use App\Http\Requests\UpdatePostPut;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -101,11 +103,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StorePostPost  $request
+     * @param  \App\Http\Requests\UpdatePostPut  $request
      * @param  \App\Models\Post  $post
      * @return \App\Http\Requests\StorePostPost  $request
      */
-    public function update(StorePostPost $request, Post $post)
+    public function update(UpdatePostPut $request, Post $post)
     {
         $post->update($request->validated());
         return back()
@@ -115,7 +117,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StorePostPost  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
@@ -136,6 +138,26 @@ class PostController extends Controller
         return back()
             ->with('status', 'Imagen cargada correctamente!');
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function contentImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|mimes:jpg,bmp,png|max:10240' //10Mg
+        ]);
+
+        $filename = time() . "." . $request->image->extension();
+        $request->image->move(public_path('images_post'), $filename);
+
+        return response()->json(['default' => URL::to('/') . '/images_post/' . $filename]);
+    }
+
 
     /**
      * Remove the specified resource from storage.

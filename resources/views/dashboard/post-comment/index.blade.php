@@ -1,12 +1,8 @@
 @extends('dashboard.master')
 
 @section('content')
-    <div class="row">
-        <div class="col">
-            <a class="btn btn-outline-primary mt-3 mb-3" href="{{route('post.create')}}">Crear nuevo post</a>
-        </div>
-    </div>
 
+@if (count($postComments) > 0)
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
@@ -15,27 +11,24 @@
                         <tr>
                             <td>ID</td>
                             <td>Título</td>
-                            <td>Categoría</td>
-                            <td>Posteado</td>
-                            <td>Creado</td>
+                            <td>Aprovado</td>
+                            <td>Usuario</td>
                             <td>Actualizado</td>
                             <td>Aciones</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($posts as $post)
+                        @foreach ($postComments as $postComment)
                             <tr>
-                                <td>{{$post->id}}</td>
-                                <td>{{$post->title}}</td>
-                                <td>{{$post->category->title}}</td>
-                                <td>{{$post->posted}}</td>
-                                <td>{{$post->created_at->format('d/m/Y')}}</td>
-                                <td>{{$post->updated_at->format('d/m/Y')}}</td>
+                                <td>{{$postComment->id}}</td>
+                                <td>{{$postComment->title}}</td>
+                                <td>{{$postComment->approved}}</td>
+                                <td>{{$postComment->user->name}}</td>
+                                <td>{{$postComment->created_at->format('d/m/Y')}}</td>
+                                <td>{{$postComment->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('post.show', $post->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <a href="{{route('post.edit', $post->id)}}" class="btn btn-success btn-sm mr-2">Actualizar</a>
-                                    <a href="{{route('post-comment.post', $post->id)}}" class="btn btn-info btn-sm mr-2">Comentarios</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$post->id}}">Borrar</button>
+                                    <a href="{{route('post-comment.show', $postComment->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$postComment->id}}">Borrar</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +40,7 @@
 
     <div class="row">
         <div class="col-2">
-            {{$posts->links()}}
+            {{$postComments->links()}}
         </div>
     </div>
 
@@ -59,10 +52,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Seguro que desea borrar este post?
+                    ¿Seguro que desea borrar este postComment?
                     <div class="modal-footer d-flex">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <form id="form-delete" action="{{route('post.destroy', 0)}}" data-action="{{route('post.destroy', 0)}}" method="POST">
+                        <form id="form-delete" action="{{route('post-comment.destroy', 0)}}" data-action="{{route('post-comment.destroy', 0)}}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Borrar</button>
@@ -85,8 +78,12 @@
                 form.setAttribute('action', action);
                 let modalTitle = deleteModal.querySelector('.modal-title');
                 let modalBodyInput = deleteModal.querySelector('.modal-body input');
-                modalTitle.textContent = `Vas a borrar el post con ID ${id}`
+                modalTitle.textContent = `Vas a borrar el postComment con ID ${id}`
             });
         };
     </script>
+@else
+    <h1>No hay comentarios para le post selecionado</h1>
+@endif
+
 @endsection

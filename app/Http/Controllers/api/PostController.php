@@ -18,7 +18,9 @@ class PostController extends ApiResponseController
         $posts = Post::join('post_images', 'post_images.post_id', '=', 'posts.id')
             ->join('categories', 'categories.id', '=', 'posts.category_id')
             ->select('posts.*', 'categories.title as category', 'post_images.image')
+            ->where('posts.posted', '=', 'yes')
             ->orderBy('posts.created_at', 'desc')
+
             ->paginate(10);
         return $this->successResponse($posts);
     }
@@ -63,6 +65,9 @@ class PostController extends ApiResponseController
             ->select('posts.*', 'categories.title as category', 'post_images.image')
             ->orderBy('posts.created_at', 'desc')
             ->where('categories.id', $category->id)
+            ->where(function ($query) {
+                $query->where('posts.posted', '=', 'yes');
+            })
             ->paginate(10);
 
         return $this->successResponse(["posts" => $posts, "category" => $category]);

@@ -1,11 +1,6 @@
 @extends('dashboard.master')
 
 @section('content')
-    <div class="row">
-        <div class="col">
-            <a class="btn btn-outline-primary mt-3 mb-3" href="{{route('post.create')}}">Crear nuevo post</a>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-12">
@@ -14,28 +9,25 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>Título</td>
-                            <td>Categoría</td>
-                            <td>Posteado</td>
-                            <td>Creado</td>
+                            <td>Nombre</td>
+                            <td>Apellido</td>
+                            <td>Email</td>
                             <td>Actualizado</td>
                             <td>Aciones</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($posts as $post)
+                        @foreach ($contacts as $contact)
                             <tr>
-                                <td>{{$post->id}}</td>
-                                <td>{{$post->title}}</td>
-                                <td>{{$post->category->title}}</td>
-                                <td>{{$post->posted}}</td>
-                                <td>{{$post->created_at->format('d/m/Y')}}</td>
-                                <td>{{$post->updated_at->format('d/m/Y')}}</td>
+                                <td>{{$contact->id}}</td>
+                                <td>{{$contact->name}}</td>
+                                <td>{{$contact->surname}}</td>
+                                <td>{{$contact->email}}</td>
+                                <td>{{$contact->created_at->format('d/m/Y')}}</td>
+                                <td>{{$contact->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('post.show', $post->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <a href="{{route('post.edit', $post->id)}}" class="btn btn-success btn-sm mr-2">Actualizar</a>
-                                    <a href="{{route('post-comment.post', $post->id)}}" class="btn btn-info btn-sm mr-2">Comentarios</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$post->id}}">Borrar</button>
+                                    <a href="{{route('contact.show', $contact->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$contact->id}}">Borrar</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +39,7 @@
 
     <div class="row">
         <div class="col-2">
-            {{$posts->links()}}
+            {{$contacts->links()}}
         </div>
     </div>
 
@@ -59,10 +51,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Seguro que desea borrar este post?
+                    ¿Seguro que desea borrar este contact?
                     <div class="modal-footer d-flex">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <form id="form-delete" action="{{route('post.destroy', 0)}}" data-action="{{route('post.destroy', 0)}}" method="POST">
+                        <form id="form-delete" action="{{route('contact.destroy', 0)}}" data-action="{{route('contact.destroy', 0)}}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Borrar</button>
@@ -85,7 +77,7 @@
                 form.setAttribute('action', action);
                 let modalTitle = deleteModal.querySelector('.modal-title');
                 let modalBodyInput = deleteModal.querySelector('.modal-body input');
-                modalTitle.textContent = `Vas a borrar el post con ID ${id}`
+                modalTitle.textContent = `Vas a borrar el contact con ID ${id}`
             });
         };
     </script>

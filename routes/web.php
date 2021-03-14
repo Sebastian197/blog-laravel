@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\dashboard\CategoryController;
+use App\Http\Controllers\dashboard\ContactController;
+use App\Http\Controllers\dashboard\PostCommentController;
 use App\Http\Controllers\dashboard\PostController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\web\WebController;
@@ -25,9 +27,21 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('dashboard')->group(function () {
     Route::resource('post', PostController::class);
     Route::post('post/{post}/image', [PostController::class, 'image'])->name('post.image');
+    Route::post('post/content_image', [PostController::class, 'contentImage']);
     Route::resource('category', CategoryController::class);
     Route::resource('user', UserController::class);
+
+    Route::resource('contact', ContactController::class)->only([
+        'index', 'show', 'destroy'
+    ]);
+
+    Route::resource('post-comment', PostCommentController::class)->only([
+        'index', 'show', 'destroy'
+    ]);
+
+    Route::get('post-comment/{post}/post', [PostCommentController::class, 'post'])->name('post-comment.post');
 });
+
 
 
 Route::get('/', [WebController::class, 'index'])->name('index');
