@@ -1,14 +1,21 @@
 <template>
     <div>
         <h1 class="mt-3">{{category}}</h1>
-        <post-list-default :posts='posts'></post-list-default>
+        <post-list-default
+            :key='currentPage'
+            @getCurrentPage='getCurrentPage'
+            v-if='total > 0'
+            :posts='posts'
+            :pCurrentPage='currentPage'
+            :total='total'
+        ></post-list-default>
     </div>
 </template>
 
 <script>
 export default {
     created() {
-        this.getPosts(this.$route.params.category_id)
+        this.getPosts()
     },
 
     methods: {
@@ -20,15 +27,22 @@ export default {
             this.postSelected = '';
         },
 
-        getPosts: function(category_id) {
-            fetch(`/api/post/${category_id}/category`)
+        getPosts: function() {
+            fetch(`/api/post/${this.$route.params.category_id}/category?page=${this.currentPage}`)
                 .then(resp =>  resp.json())
                 .then(json => {
-                    const { data } = json.data.posts
+                    const { data, last_page } = json.data.posts
                     const { title } = json.data.category
+
                     this.posts = data
+                    this.total = last_page
                     this.category = title
                 })
+        },
+
+        getCurrentPage: function (val) {
+            this.currentPage = val
+            this.getPosts()
         }
     },
 
@@ -37,6 +51,8 @@ export default {
             postSelected: '',
             posts: [],
             category: '',
+            total: 0,
+            currentPage: 1
         }
     }
 }

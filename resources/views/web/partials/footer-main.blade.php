@@ -59,9 +59,23 @@
     <!-- Grid container -->
 
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div
+        class="text-center p-3"
+        style="background-color: rgba(0, 0, 0, 0.2);"
+    >
         © {{date('Y')}} Copyright:
-        <a class="text-white" href="#">{{env('APP_NAME')}}</a>
+        <router-link
+            class="text-white"
+            to="/"
+        >
+            {{env('APP_NAME')}}
+        </router-link>
+        <router-link
+            class="text-white ml-2"
+            :to="{name: 'contact'}"
+        >
+            <u>Contact</u>
+        </router-link>
     </div>
     <!-- Copyright -->
 </footer>

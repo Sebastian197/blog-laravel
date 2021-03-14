@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <h1 class="card-title">{{post.titlePost}}</h1>
                     <router-link
-                        class="badge badge-success p-1 mb-3 mt-3"
+                        class="badge badge-pill badge-success p-1 mb-3 mt-3"
                         :to="{name: 'post-category', params: {category_id: categoryId}}"
                     >
                         {{category}}
@@ -40,7 +40,6 @@ export default {
                 .then(json => {
                     const { id: idPost, title: titlePost, content } = json.data
                     const post = { idPost, titlePost, content }
-                    console.log(post)
                     const { image } = json.data.image
                     const {title: titleCategory, id: idCategory} = json.data.category
 

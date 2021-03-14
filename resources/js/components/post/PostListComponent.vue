@@ -1,9 +1,11 @@
 <template>
     <div>
         <post-list-default
-            @getCurrenPage="getCurrenPage"
-            v-if="total > 0"
+            :key='currentPage'
+            @getCurrentPage='getCurrentPage'
+            v-if='total > 0'
             :posts='posts'
+            :pCurrentPage='currentPage'
             :total='total'
         ></post-list-default>
     </div>
@@ -25,18 +27,17 @@ export default {
         },
 
         getPosts: function() {
-            fetch(`/api/post?page=${this.getCurrenPage}`)
+            fetch(`/api/post?page=${this.currentPage}`)
                 .then(resp =>  resp.json())
                 .then(json => {
                     const { data, last_page } = json.data
-                    console.log(json.data)
+
                     this.posts = data
                     this.total = last_page
-                    console.log('modal created ', last_page)
                 })
         },
 
-        getCurrenPage: function (val) {
+        getCurrentPage: function (val) {
             this.currentPage = val
             this.getPosts()
         }
@@ -48,7 +49,6 @@ export default {
             posts: [],
             total: 0,
             currentPage: 1
-
         }
     }
 }

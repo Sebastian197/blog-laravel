@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\dashboard;
 
+use App\Helpers\CustomUrl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostPost;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -52,7 +54,23 @@ class PostController extends Controller
      */
     public function store(StorePostPost $request)
     {
-        Post::create($request->validated());
+        if ($request->url_clean == '') {
+            $urlClean = CustomUrl::urlTitle(CustomUrl::convertAccentedCharacters($request->title), '-', true);
+        } else {
+            $urlClean = CustomUrl::urlTitle(CustomUrl::convertAccentedCharacters($request->url_clean), '-', true);
+        }
+
+        $requestData = $request->validated();
+        $requestData['url_clean'] = $urlClean;
+        $validator = Validator::make($requestData, StorePostPost::myRukes());
+
+        if ($validator->fails()) {
+            return redirect('dashboard/post/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        Post::create($requestData);
         return back()
             ->with('status', 'Post creado con éxito!');
     }

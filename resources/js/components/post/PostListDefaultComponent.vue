@@ -26,7 +26,10 @@
                 </router-link>
             </div>
         </div>
-        <modal-post @closeModalPost="closeModalPost" :post="postSelected"></modal-post>
+        <modal-post
+            @closeModalPost="closeModalPost"
+            :post="postSelected"
+        ></modal-post>
         <v-pagination
             class="mt-3"
             v-model="currentPage"
@@ -46,10 +49,10 @@
 import vPagination from 'vue-plain-pagination';
 
 export default {
-    props: ['posts', 'total'],
+    props: ['posts', 'total', 'pCurrentPage'],
 
     created() {
-        console.log('created ', this.total)
+        this.currentPage = this.pCurrentPage
     },
 
     methods: {
@@ -86,8 +89,7 @@ export default {
 
     watch: {
         currentPage: function (newVal, oldVald) {
-            console.log(newVal)
-            this.$emit('getCurrenPage', newVal)
+            this.$emit('getCurrentPage', newVal)
         }
     }
 }
