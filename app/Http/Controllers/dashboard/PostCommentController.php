@@ -73,6 +73,20 @@ class PostCommentController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\PostComment  $postComment
+     * @return \Illuminate\Http\Response
+     */
+    public function proccess(PostComment $postComment)
+    {
+        $postComment->approved = ($postComment->approved == '0') ? '1' : '0';
+        $postComment->save();
+
+        return response()->json($postComment->approved);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\PostComment  $postComment

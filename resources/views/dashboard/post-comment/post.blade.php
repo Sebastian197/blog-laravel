@@ -55,8 +55,31 @@
                                 <td>{{$postComment->updated_at->format('d/m/Y')}}</td>
                                 <td>
                                     {{--<a href="{{route('post-comment.show', $postComment->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>--}}
-                                    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#showModal" data-id="{{$postComment->id}}">Ver</button>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$postComment->id}}">Borrar</button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-light btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#showModal"
+                                        data-id="{{$postComment->id}}"
+                                        >
+                                        Ver
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="approved btn {{$postComment->approved == 1 ? "btn-outline-success" : "btn-outline-danger"}} btn-sm"
+                                        onclick="btnApproved({{$postComment->id}})"
+                                    >
+                                        {{$postComment->approved == 1 ? "Aprovado" : "Rechazado"}}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        data-id="{{$postComment->id}}"
+                                        >
+                                        Borrar
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -113,20 +136,36 @@
     </div>
 
     <script>
+/*let formData = new FormData()
+            formData.append('_token', {{csrf_token()}})
+            console.log(formData)*/
+        /*function btnApproved(id) {
+            console.log(id)
+
+            fetch("{{URL::to('/')}}/dashboard/post-comment/proccess/" + id, {
+                method="POST",
+                body: formData
+            })
+                .then(resp => resp.json())
+                .then(comment => {
+                    console.log(comment)
+                })
+        }*/
+
+
         let showModal = document.querySelector('#showModal')
         showModal.addEventListener('show.bs.modal', (event) => {
             let button = event.relatedTarget
             let id = button.getAttribute('data-id')
             let modalTitle = document.querySelector('.title-comment')
             let modalMessage = document.querySelector('.message')
-            $.ajax({
-                method: 'GET',
-                url: '{{URL::to('/')}}/dashboard/post-comment/j-show/' + id
-            })
-            .done(comment => {
-                modalTitle.textContent = comment.title
-                modalMessage.textContent = comment.message
-            })
+
+            fetch("{{URL::to('/')}}/dashboard/post-comment/j-show/" + id)
+                .then(resp => resp.json())
+                .then(comment => {
+                    modalTitle.textContent = comment.title
+                    modalMessage.textContent = comment.message
+                })
         })
 
         window.onload = () => {
@@ -142,9 +181,10 @@
                 let modalBodyInput = deleteModal.querySelector('.modal-body input')
                 modalTitle.textContent = `Vas a borrar el postComment con ID ${id}`
             })
+
+
         }
     </script>
-
 @else
     <h1>No hay comentarios para le post selecionado</h1>
 @endif
