@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserPost;
 use App\Http\Requests\UpdateUserPut;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 
@@ -29,9 +28,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        User::find(2)->tags()->sync([1, 2, 3, 4]);
         $users = User::orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('dashboard.user.index', ['users' => $users]);
+        return view('dashboard.user.index', compact('users'));
     }
 
     /**
@@ -41,7 +41,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('dashboard.user.create', ['user' => new User()]);
+        $user = new User();
+        return view('dashboard.user.create', compact('user'));
     }
 
     /**
@@ -57,7 +58,7 @@ class UserController extends Controller
             'rol_id' => 2, // rol de admin
             'surname' => $request['surname'],
             'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'password' => $request['password'],
         ]);
         return back()
             ->with('status', 'Usuario creado con éxito!');
@@ -71,7 +72,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('dashboard.user.show', ['user' => $user]);
+        return view('dashboard.user.show', compact('user'));
     }
 
     /**
@@ -82,7 +83,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('dashboard.user.edit', ['user' => $user]);
+        return view('dashboard.user.edit', compact('user'));
     }
 
     /**

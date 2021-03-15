@@ -13,7 +13,7 @@
     <label for="category">Categorías</label>
     <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category" aria-describedby="helpCategoryId">
         @foreach ($categories as $title => $id)
-            <option {{$post->category_id === $id ? 'selected="selected"' : '' }} value="{{$id}}">{{$title}}</option>
+            <option {{$post->category_id === $id ? 'selected' : '' }} value="{{$id}}">{{$title}}</option>
         @endforeach
     </select>
     @error('category_id') <small id="helpCategoryId" class="text-danger">{{$message}}</small> @enderror
@@ -24,6 +24,15 @@
         @include('dashboard.partials.option-yes-not',['val' => $post->posted])
     </select>
     @error('posted') <small id="helpPosted" class="text-danger">{{$message}}</small> @enderror
+</div>
+<div class="form-group">
+    <label for="tags_id">Tags</label>
+    <select multiple class="form-control @error('tags_id') is-invalid @enderror" name="tags_id[]" id="tags_id" aria-describedby="helpTag">
+        @foreach ($tags as $title => $id)
+            <option {{in_array($id, old('tags_id') ? : $post->tags->pluck('id')->toArray()) ? 'selected' : '' }} value="{{$id}}">{{$title}}</option>
+        @endforeach
+    </select>
+    @error('tags_id') <small id="helpTag" class="text-danger">{{$message}}</small> @enderror
 </div>
 <div class="form-group">
     <label for="content">Introduce el contenido del post</label>

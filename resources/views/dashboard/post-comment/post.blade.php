@@ -53,7 +53,7 @@
                                 <td>{{$postComment->user->name}}</td>
                                 <td>{{$postComment->created_at->format('d/m/Y')}}</td>
                                 <td>{{$postComment->updated_at->format('d/m/Y')}}</td>
-                                <td>
+                                <td class="d-flex">
                                     {{--<a href="{{route('post-comment.show', $postComment->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>--}}
                                     <button
                                         type="button"
@@ -64,16 +64,19 @@
                                         >
                                         Ver
                                     </button>
+                                    <form action="{{route("post-comment.proccess", $postComment->id)}}" method="POST">
+                                        @csrf
+                                        <button
+                                            type="submit"
+                                            class="approved mr-2 btn {{$postComment->approved == 1 ? "btn-success" : "btn-outline-danger"}} btn-sm"
+                                        >
+                                            {{$postComment->approved == 1 ? "Aprovado" : "Rechazado"}}
+                                        </button>
+                                    </form>
+
                                     <button
                                         type="button"
-                                        class="approved btn {{$postComment->approved == 1 ? "btn-outline-success" : "btn-outline-danger"}} btn-sm"
-                                        onclick="btnApproved({{$postComment->id}})"
-                                    >
-                                        {{$postComment->approved == 1 ? "Aprovado" : "Rechazado"}}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-danger btn-sm"
+                                        class="btn btn-danger btn-sm mr-2"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
                                         data-id="{{$postComment->id}}"
@@ -136,23 +139,6 @@
     </div>
 
     <script>
-/*let formData = new FormData()
-            formData.append('_token', {{csrf_token()}})
-            console.log(formData)*/
-        /*function btnApproved(id) {
-            console.log(id)
-
-            fetch("{{URL::to('/')}}/dashboard/post-comment/proccess/" + id, {
-                method="POST",
-                body: formData
-            })
-                .then(resp => resp.json())
-                .then(comment => {
-                    console.log(comment)
-                })
-        }*/
-
-
         let showModal = document.querySelector('#showModal')
         showModal.addEventListener('show.bs.modal', (event) => {
             let button = event.relatedTarget
@@ -181,35 +167,10 @@
                 let modalBodyInput = deleteModal.querySelector('.modal-body input')
                 modalTitle.textContent = `Vas a borrar el postComment con ID ${id}`
             })
-
-
         }
     </script>
 @else
     <h1>No hay comentarios para le post selecionado</h1>
 @endif
-
-<script>
-    /*window.onload = () => {
-        $('#filterPost').change(function () {
-            let action = $('#form-delete').attr('action')
-            action = action.slice(0, -1)
-            action += `${$(this).val()}/post`
-            $('#filterForm').attr('action', action)
-            console.log(action)
-        })
-    }*/
-
-    window.onload = () => {
-        $('#filterPost').change(function () {
-            let action = $('#form-delete').attr('action')
-            let url = action.slice(0, action.lastIndexOf("/") + 1)
-            action = action.slice(action.lastIndexOf("/") + 1, -1)
-            action = `${url}${$(this).val()}/post`
-            $('#filterForm').attr('action', action)
-            console.log(action)
-        })
-    }
-</script>
 
 @endsection

@@ -28,7 +28,7 @@ class PostCommentController extends Controller
     public function index()
     {
         $postComments = PostComment::orderBy('created_at', 'desc')->paginate(10);
-        return view('dashboard.post-comment.index', ['postComments' => $postComments]);
+        return view('dashboard.post-comment.index', compact('postComments'));
     }
 
     /**
@@ -43,11 +43,7 @@ class PostCommentController extends Controller
             ->where('post_id', '=', $post->id)
             ->paginate(10);
 
-        return view('dashboard.post-comment.post', [
-            'postComments' => $postComments,
-            'posts' => $posts,
-            'post' => $post
-        ]);
+        return view('dashboard.post-comment.post', compact('postComments', 'posts', 'post'));
     }
 
     /**
@@ -58,7 +54,7 @@ class PostCommentController extends Controller
      */
     public function show(PostComment $postComment)
     {
-        return view('dashboard.post-comment.show', ['postComment' => $postComment]);
+        return view('dashboard.post-comment.show', compact('postComment'));
     }
 
     /**
@@ -83,7 +79,8 @@ class PostCommentController extends Controller
         $postComment->approved = ($postComment->approved == '0') ? '1' : '0';
         $postComment->save();
 
-        return response()->json($postComment->approved);
+        return back();
+        //response()->json($postComment->approved);
     }
 
     /**

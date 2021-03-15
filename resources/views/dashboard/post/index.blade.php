@@ -26,8 +26,8 @@
                         @foreach ($posts as $post)
                             <tr>
                                 <td>{{$post->id}}</td>
-                                <td>{{$post->title}}</td>
-                                <td>{{$post->category->title}}</td>
+                                <td>{{Str::limit($post->title, 15)}}</td>
+                                <td>{{Str::limit($post->category->title, 25)}}</td>
                                 <td>{{$post->posted}}</td>
                                 <td>{{$post->created_at->format('d/m/Y')}}</td>
                                 <td>{{$post->updated_at->format('d/m/Y')}}</td>

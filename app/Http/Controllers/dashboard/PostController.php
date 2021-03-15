@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePostPut;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
+use App\Models\Tag;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,7 +35,7 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('dashboard.post.index', ['posts' => $posts]);
+        return view('dashboard.post.index', compact('posts'));
     }
 
     /**
@@ -44,8 +45,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        $tags = Tag::pluck('id', 'title');
         $category = Category::pluck('id', 'title');
-        return view('dashboard.post.create', ['post' => new Post(), 'categories' => $category]);
+        return view('dashboard.post.create', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -72,7 +74,8 @@ class PostController extends Controller
                 ->withInput();
         }
 
-        Post::create($requestData);
+        $post = Post::create($requestData);
+        $post->tags()->sync($request->tags_id);
         return back()
             ->with('status', 'Post creado con éxito!');
     }
@@ -85,7 +88,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('dashboard.post.show', ['post' => $post]);
+        return view('dashboard.post.show', compact('post'));
     }
 
     /**
@@ -96,8 +99,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $category = Category::pluck('id', 'title');
-        return view('dashboard.post.edit', ['post' => $post, 'categories' => $category]);
+        $tags = Tag::pluck('id', 'title');
+        $categories = Category::pluck('id', 'title');
+        return view('dashboard.post.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -109,6 +113,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostPut $request, Post $post)
     {
+        $post->tags()->sync($request->tags_id);
         $post->update($request->validated());
         return back()
             ->with('status', 'Post actualizado correctamente!');

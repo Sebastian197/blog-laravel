@@ -31,7 +31,7 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('dashboard.category.index', ['categories' => $categories]);
+        return view('dashboard.category.index', compact('categories'));
     }
 
     /**
@@ -41,7 +41,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('dashboard.category.create', ['category' => new Category()]);
+        $category = new Category();
+        return view('dashboard.category.create', compact('category'));
     }
 
     /**
@@ -81,7 +82,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('dashboard.category.show', ['category' => $category]);
+        return view('dashboard.category.show', compact('category'));
     }
 
     /**
@@ -92,7 +93,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('dashboard.category.edit', ['category' => $category]);
+        return view('dashboard.category.edit', compact('category'));
     }
 
     /**
