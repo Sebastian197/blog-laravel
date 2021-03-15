@@ -62,6 +62,17 @@ class PostCommentController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\PostComment  $postComment
+     * @return \Illuminate\Http\Response
+     */
+    public function jShow(PostComment $postComment)
+    {
+        return response()->json($postComment);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\PostComment  $postComment

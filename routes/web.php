@@ -40,6 +40,7 @@ Route::prefix('dashboard')->group(function () {
     ]);
 
     Route::get('post-comment/{post}/post', [PostCommentController::class, 'post'])->name('post-comment.post');
+    Route::get('post-comment/j-show/{postComment}', [PostCommentController::class, 'jShow']);
 });
 
 
