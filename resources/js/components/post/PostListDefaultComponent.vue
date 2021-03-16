@@ -6,7 +6,7 @@
             v-bind:key="post.title"
         >
             <img
-                v-bind:src=" '/images/' + post.image"
+                v-bind:src="post.image"
                 class="card-img-top"
             />
             <div class="card-body">

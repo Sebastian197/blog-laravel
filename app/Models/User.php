@@ -61,10 +61,10 @@ class User extends Authenticatable
      * @param  string  $value
      * @return void
      */
-    public function setPasswordAttribute($value)
+    /*public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
-    }
+    }*/
 
     public function tags()
     {

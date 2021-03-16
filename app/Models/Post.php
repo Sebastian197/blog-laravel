@@ -20,6 +20,11 @@ class Post extends Model
         return $this->hasOne(PostImage::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(PostImage::class);
+    }
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');

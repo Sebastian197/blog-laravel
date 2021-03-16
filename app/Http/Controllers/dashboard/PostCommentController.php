@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostComment;
 
-
 class PostCommentController extends Controller
 {
     /**

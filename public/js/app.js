@@ -2141,6 +2141,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch("/api/post/".concat(p)).then(function (resp) {
         return resp.json();
       }).then(function (json) {
+        console.log('PostDetailComponent -> ', json.data);
         var _json$data = json.data,
             idPost = _json$data.id,
             titlePost = _json$data.title,
@@ -2215,6 +2216,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch("/api/post?page=".concat(this.currentPage)).then(function (resp) {
         return resp.json();
       }).then(function (json) {
+        console.log('PostListComponent -> ', json.data);
         var _json$data = json.data,
             data = _json$data.data,
             last_page = _json$data.last_page;
@@ -38941,7 +38943,7 @@ var render = function() {
             _c("div", { staticClass: "card-header" }, [
               _c("img", {
                 staticClass: "card-img-top",
-                attrs: { src: "/images/" + _vm.image }
+                attrs: { src: _vm.image }
               })
             ]),
             _vm._v(" "),
@@ -39055,7 +39057,7 @@ var render = function() {
         return _c("div", { key: post.title, staticClass: "card mt-3" }, [
           _c("img", {
             staticClass: "card-img-top",
-            attrs: { src: "/images/" + post.image }
+            attrs: { src: post.image }
           }),
           _vm._v(" "),
           _c(

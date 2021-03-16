@@ -33,7 +33,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')
+        $posts = Post::with('category')
+            ->orderBy('created_at', 'desc')
             ->paginate(5);
         return view('dashboard.post.index', compact('posts'));
     }
@@ -45,8 +46,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        $post = new Post();
         $tags = Tag::pluck('id', 'title');
-        $category = Category::pluck('id', 'title');
+        $categories = Category::pluck('id', 'title');
         return view('dashboard.post.create', compact('post', 'categories', 'tags'));
     }
 
@@ -132,11 +134,12 @@ class PostController extends Controller
             'image' => 'required|mimes:jpg,bmp,png|max:10240' //10Mg
         ]);
 
-        $filename = time() . "." . $request->image->extension();
-        $request->image->move(public_path('images'), $filename);
+        //$filename = time() . "." . $request->image->extension();
+        //$request->image->move(public_path('images'), $filename);
+        $path = $request->image->store('public/images_post');
 
         PostImage::create([
-            'image' => $filename,
+            'image' => $path,
             'post_id' => $post->id
         ]);
 

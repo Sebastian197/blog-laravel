@@ -21,7 +21,7 @@ class PostController extends ApiResponseController
             ->where('posts.posted', '=', 'yes')
             ->orderBy('posts.created_at', 'desc')
 
-            ->paginate(10);
+            ->paginate(12);
         return $this->successResponse($posts);
     }
 
@@ -34,6 +34,7 @@ class PostController extends ApiResponseController
     public function show(Post $post)
     {
         $post->image;
+        $post->images;
         $post->category;
         return $this->successResponse($post);
     }
