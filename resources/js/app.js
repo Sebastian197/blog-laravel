@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+require('bootstrap-material-design');
 
 import router from './assets/router.js';
 import MyUploadAdapter from './assets/ckeditor/MyUploadAdapter';

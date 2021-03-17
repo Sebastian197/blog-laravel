@@ -4,6 +4,7 @@ use App\Http\Controllers\dashboard\CategoryController;
 use App\Http\Controllers\dashboard\ContactController;
 use App\Http\Controllers\dashboard\PostCommentController;
 use App\Http\Controllers\dashboard\PostController;
+use App\Http\Controllers\dashboard\TagController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\web\WebController;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ Route::prefix('dashboard')->group(function () {
     Route::post('post/content_image', [PostController::class, 'contentImage']);
     Route::resource('category', CategoryController::class);
     Route::resource('user', UserController::class);
+    Route::resource('tag', TagController::class);
 
     Route::resource('contact', ContactController::class)->only([
         'index', 'show', 'destroy'

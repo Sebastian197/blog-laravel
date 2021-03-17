@@ -28,9 +28,15 @@
                                 <td>{{$category->created_at->format('d/m/Y')}}</td>
                                 <td>{{$category->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('category.show', $category->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <a href="{{route('category.edit', $category->id)}}" class="btn btn-success btn-sm mr-2">Actualizar</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$category->id}}">Borrar</button>
+                                    <a href="{{route('category.show', $category->id)}}" class="btn btn-light btn-sm mr-2">
+                                        <span class="material-icons md-48">preview</span>
+                                    </a>
+                                    <a href="{{route('category.edit', $category->id)}}" class="btn btn-success btn-sm mr-2">
+                                        <span class="material-icons md-48">create</span>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$category->id}}">
+                                        <span class="material-icons md-48">delete_forever</span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -80,7 +86,7 @@
                 form.setAttribute('action', action);
                 let modalTitle = deleteModal.querySelector('.modal-title');
                 let modalBodyInput = deleteModal.querySelector('.modal-body input');
-                modalTitle.textContent = `Vas a borrar la categoría con ID ${id}`
+                modalTitle.textContent = `Vas a borrar la Categoría con ID ${id}`
             });
         };
     </script>

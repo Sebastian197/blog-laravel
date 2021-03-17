@@ -32,10 +32,18 @@
                                 <td>{{$post->created_at->format('d/m/Y')}}</td>
                                 <td>{{$post->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('post.show', $post->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <a href="{{route('post.edit', $post->id)}}" class="btn btn-success btn-sm mr-2">Actualizar</a>
-                                    <a href="{{route('post-comment.post', $post->id)}}" class="btn btn-info btn-sm mr-2">Comentarios</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$post->id}}">Borrar</button>
+                                    <a href="{{route('post.show', $post->id)}}" class="btn btn-light btn-sm mr-2">
+                                        <span class="material-icons md-48">preview</span>
+                                    </a>
+                                    <a href="{{route('post.edit', $post->id)}}" class="btn btn-success btn-sm mr-2">
+                                        <span class="material-icons md-48">create</span>
+                                    </a>
+                                    <a href="{{route('post-comment.post', $post->id)}}" class="btn btn-info btn-sm mr-2">
+                                        <span class="material-icons md-48">question_answer</span>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$post->id}}">
+                                        <span class="material-icons md-48">delete_forever</span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

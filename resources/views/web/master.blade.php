@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{env('APP_NAME')}}</title>
     <link rel="stylesheet" href="{{asset("css/app.css")}}">
+    <link rel="stylesheet" href="{{asset("dashboard/css/dashboard.css")}}">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="wrapper">
         @include('web.partials.nav-header-main')
-        <div class="container mb-3 mt-3">
+        <div class="container mb-3 mt-3 app">
             @yield('content')
         </div>
         @include('web.partials.footer-main')

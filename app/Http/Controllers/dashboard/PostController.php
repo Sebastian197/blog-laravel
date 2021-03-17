@@ -134,12 +134,11 @@ class PostController extends Controller
             'image' => 'required|mimes:jpg,bmp,png|max:10240' //10Mg
         ]);
 
-        //$filename = time() . "." . $request->image->extension();
-        //$request->image->move(public_path('images'), $filename);
-        $path = $request->image->store('public/images_post');
+        $filename = time() . "." . $request->image->extension();
+        $request->image->move(public_path('images'), $filename);
 
         PostImage::create([
-            'image' => $path,
+            'image' => $filename,
             'post_id' => $post->id
         ]);
 

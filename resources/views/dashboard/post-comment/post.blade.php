@@ -40,6 +40,7 @@
                             <td>Título</td>
                             <td>Aprovado</td>
                             <td>Usuario</td>
+                            <td>Creado</td>
                             <td>Actualizado</td>
                             <td>Aciones</td>
                         </tr>
@@ -53,30 +54,32 @@
                                 <td>{{$postComment->user->name}}</td>
                                 <td>{{$postComment->created_at->format('d/m/Y')}}</td>
                                 <td>{{$postComment->updated_at->format('d/m/Y')}}</td>
-                                <td class="d-flex">
+                                <td class="d-flex align-items-center">
                                     {{--<a href="{{route('post-comment.show', $postComment->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>--}}
                                     <button
                                         type="button"
-                                        class="btn btn-light btn-sm"
+                                        class="btn btn-light btn-sm mr-2"
                                         data-bs-toggle="modal"
                                         data-bs-target="#showModal"
                                         data-id="{{$postComment->id}}"
                                         >
-                                        Ver
+                                        <span class="material-icons md-48">preview</span>
                                     </button>
-                                    <form action="{{route("post-comment.proccess", $postComment->id)}}" method="POST">
+                                    <form action="{{route("post-comment.proccess", $postComment->id)}}" method="POST" class="m-0 p-0">
                                         @csrf
                                         <button
                                             type="submit"
                                             class="approved mr-2 btn {{$postComment->approved == 1 ? "btn-success" : "btn-outline-danger"}} btn-sm"
                                         >
-                                            {{$postComment->approved == 1 ? "Aprovado" : "Rechazado"}}
+                                            <span class="material-icons md-48">
+                                                {{$postComment->approved == 1 ? 'check_box' : 'check_box_outline_blank'}}
+                                            </span>
                                         </button>
                                     </form>
 
                                     <button
                                         type="button"
-                                        class="btn btn-danger btn-sm mr-2"
+                                        class="btn btn-danger btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
                                         data-id="{{$postComment->id}}"
@@ -131,7 +134,6 @@
                    <p class="message"></p>
                     <div class="modal-footer d-flex">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-
                     </div>
                 </div>
             </div>
@@ -165,12 +167,12 @@
                 form.setAttribute('action', action)
                 let modalTitle = deleteModal.querySelector('.modal-title')
                 let modalBodyInput = deleteModal.querySelector('.modal-body input')
-                modalTitle.textContent = `Vas a borrar el postComment con ID ${id}`
+                modalTitle.textContent = `Vas a borrar el Comentario con ID ${id}`
             })
         }
     </script>
 @else
-    <h1>No hay comentarios para le post selecionado</h1>
+    <h1>No hay comentarios para este post selecionado</h1>
 @endif
 
 @endsection

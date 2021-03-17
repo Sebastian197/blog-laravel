@@ -2,13 +2,17 @@
     <div>
         <div
             class="card mt-3"
-            v-for="post in posts"
-            v-bind:key="post.title"
+            v-for="(post, i) in posts"
+            v-bind:key="i"
         >
-            <img
-                v-bind:src="post.image"
-                class="card-img-top"
-            />
+            <div v-if='post.image'>
+                <img
+
+                    v-bind:src="'/images/' + post.image"
+                    class="card-img-top"
+                />
+            </div>
+
             <div class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
                 <p class="card-text">{{post.content}}</p>
@@ -90,6 +94,7 @@ export default {
     watch: {
         currentPage: function (newVal, oldVald) {
             this.$emit('getCurrentPage', newVal)
+            console.log(newVal)
         }
     }
 }

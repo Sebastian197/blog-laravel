@@ -26,8 +26,12 @@
                                 <td>{{$contact->created_at->format('d/m/Y')}}</td>
                                 <td>{{$contact->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('contact.show', $contact->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$contact->id}}">Borrar</button>
+                                    <a href="{{route('contact.show', $contact->id)}}" class="btn btn-light btn-sm mr-2">
+                                        <span class="material-icons md-48">preview</span>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$contact->id}}">
+                                        <span class="material-icons md-48">delete_forever</span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -51,7 +55,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Seguro que desea borrar este contact?
+                    ¿Seguro que desea borrar este contacto?
                     <div class="modal-footer d-flex">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <form id="form-delete" action="{{route('contact.destroy', 0)}}" data-action="{{route('contact.destroy', 0)}}" method="POST">
@@ -77,7 +81,7 @@
                 form.setAttribute('action', action);
                 let modalTitle = deleteModal.querySelector('.modal-title');
                 let modalBodyInput = deleteModal.querySelector('.modal-body input');
-                modalTitle.textContent = `Vas a borrar el contact con ID ${id}`
+                modalTitle.textContent = `Vas a borrar el Contacto con ID ${id}`
             });
         };
     </script>

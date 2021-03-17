@@ -27,8 +27,12 @@
                                 <td>{{$postComment->created_at->format('d/m/Y')}}</td>
                                 <td>{{$postComment->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('post-comment.show', $postComment->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$postComment->id}}">Borrar</button>
+                                    <a href="{{route('post-comment.show', $postComment->id)}}" class="btn btn-light btn-sm mr-2">
+                                        <span class="material-icons md-48">preview</span>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$postComment->id}}">
+                                        <span class="material-icons md-48">delete_forever</span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -52,7 +56,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Seguro que desea borrar este postComment?
+                    ¿Seguro que desea borrar este comentario?
                     <div class="modal-footer d-flex">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <form id="form-delete" action="{{route('post-comment.destroy', 0)}}" data-action="{{route('post-comment.destroy', 0)}}" method="POST">
@@ -78,12 +82,12 @@
                 form.setAttribute('action', action);
                 let modalTitle = deleteModal.querySelector('.modal-title');
                 let modalBodyInput = deleteModal.querySelector('.modal-body input');
-                modalTitle.textContent = `Vas a borrar el postComment con ID ${id}`
+                modalTitle.textContent = `Vas a borrar el Comentario con ID ${id}`
             });
         };
     </script>
 @else
-    <h1>No hay comentarios para le post selecionado</h1>
+    <h1>No hay comentarios</h1>
 @endif
 
 @endsection

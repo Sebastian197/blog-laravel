@@ -5,7 +5,7 @@
             <div class="card mt-3" >
                 <div class="card-header">
                     <img
-                        v-bind:src="image"
+                        v-bind:src="'/images/' + image"
                         class="card-img-top"
                     />
                 </div>
@@ -38,7 +38,6 @@ export default {
             fetch(`/api/post/${p}`)
                 .then(resp =>  resp.json())
                 .then(json => {
-                    console.log('PostDetailComponent -> ',json.data)
                     const { id: idPost, title: titlePost, content } = json.data
                     const post = { idPost, titlePost, content }
                     const { image } = json.data.image

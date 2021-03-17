@@ -33,7 +33,7 @@ export default {
                 .then(json => {
                     const { data, last_page } = json.data.posts
                     const { title } = json.data.category
-
+                    
                     this.posts = data
                     this.total = last_page
                     this.category = title

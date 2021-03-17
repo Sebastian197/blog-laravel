@@ -33,9 +33,15 @@
                                 <td>{{$user->created_at->format('d/m/Y')}}</td>
                                 <td>{{$user->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="{{route('user.show', $user->id)}}" class="btn btn-light btn-sm mr-2">Ver</a>
-                                    <a href="{{route('user.edit', $user->id)}}" class="btn btn-success btn-sm mr-2">Actualizar</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$user->id}}">Borrar</button>
+                                    <a href="{{route('user.show', $user->id)}}" class="btn btn-light btn-sm mr-2">
+                                        <span class="material-icons md-48">preview</span>
+                                    </a>
+                                    <a href="{{route('user.edit', $user->id)}}" class="btn btn-success btn-sm mr-2">
+                                        <span class="material-icons md-48">create</span>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$user->id}}">
+                                        <span class="material-icons md-48">delete_forever</span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -59,7 +65,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Seguro que desea borrar esta categoría?
+                    ¿Seguro que desea borrar este usuario?
                     <div class="modal-footer d-flex">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <form id="form-delete" action="{{route('user.destroy', 0)}}" data-action="{{route('user.destroy', 0)}}" method="POST">
@@ -85,7 +91,7 @@
                 form.setAttribute('action', action);
                 let modalTitle = deleteModal.querySelector('.modal-title');
                 let modalBodyInput = deleteModal.querySelector('.modal-body input');
-                modalTitle.textContent = `Vas a borrar la categoría con ID ${id}`
+                modalTitle.textContent = `Vas a borrar el Usuario con ID ${id}`
             });
         };
     </script>

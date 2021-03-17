@@ -7,3 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.app  {
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+}
+

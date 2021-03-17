@@ -5,7 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">
+                    <a href="{{ route('post.index') }}">
+                        <div class="d-flex">
+                            <p>{{ __('Dashboard') }}</p>
+                            <span class="material-icons md-48 ml-1">dashboard</span>
+                        </div>
+                    </a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))

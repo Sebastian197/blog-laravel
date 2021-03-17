@@ -30,7 +30,6 @@ export default {
             fetch(`/api/post?page=${this.currentPage}`)
                 .then(resp =>  resp.json())
                 .then(json => {
-                    console.log('PostListComponent -> ',json.data)
                     const { data, last_page } = json.data
 
                     this.posts = data
